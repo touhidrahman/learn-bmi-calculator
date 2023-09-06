@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Observable, combineLatest, map, tap } from 'rxjs';
 
 @Component({
@@ -11,8 +11,6 @@ export class BmiFormComponent {
 
   // TODO: fix
   kg = 32
-  feetValue = 3
-  inchValue = 7
   bmi = 0
 
   isScoreDisplayed = false;
@@ -26,6 +24,11 @@ export class BmiFormComponent {
     inches: new FormControl<number>(0, [Validators.required, Validators.max(12), Validators.min(0)]),
     weight: new FormControl<number>(0, [Validators.required, Validators.max(200), Validators.min(30)]),
   })
+
+  get emailErrors(): ValidationErrors | null | undefined {
+    return this.bmiForm.get('email')?.errors
+  }
+
 
   totalInches$: Observable<number> = this.convertToInches()
 
