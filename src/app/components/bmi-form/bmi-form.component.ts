@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Observable, combineLatest, map, tap } from 'rxjs';
 
 @Component({
   selector: 'app-bmi-form',
@@ -7,6 +8,14 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./bmi-form.component.scss']
 })
 export class BmiFormComponent {
+
+  // TODO: fix
+  kg = 32
+  feetValue = 3
+  inchValue = 7
+  bmi = 0
+
+  isScoreDisplayed = false;
 
   bmiForm = new FormGroup({
     firstName: new FormControl<string>('', [Validators.required]),
@@ -18,5 +27,31 @@ export class BmiFormComponent {
     weight: new FormControl<number>(0, [Validators.required, Validators.max(200), Validators.min(30)]),
   })
 
-  constructor() {}
+  totalInches$: Observable<number> = this.convertToInches()
+
+  constructor() {
+
+    // this.bmiForm.valueChanges.pipe().subscribe({
+    //   next: (value) => console.log(value)
+    // })
+  }
+
+  convertToInches(): Observable<number> {
+    return combineLatest({
+      // TODO: fix
+      feet: this.bmiForm.get('feet')?.valueChanges as any,
+      inches: this.bmiForm.get('inches')?.valueChanges as any,
+    }).pipe(
+      tap((value) => console.log('TCL: value', value)), // TODO: remove
+      map(({ feet, inches }) => this.getTotalInches(feet as number, inches as number))
+    )
+  }
+
+  showScore(): void {
+    this.isScoreDisplayed = true;
+  }
+
+  private getTotalInches(feet: number, inches: number): number {
+    return feet * 12 + inches
+  }
 }

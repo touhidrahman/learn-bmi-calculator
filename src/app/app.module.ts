@@ -5,11 +5,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BmiFormComponent } from './components/bmi-form/bmi-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FeetToInchesPipe } from './pipes/feet-to-inches.pipe';
+import { KgToPoundPipe } from './pipes/kg-to-pound.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
-    BmiFormComponent
+    BmiFormComponent,
+    FeetToInchesPipe,
+    KgToPoundPipe
   ],
   imports: [
     BrowserModule,
@@ -17,6 +21,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [
+    FeetToInchesPipe,
+    KgToPoundPipe
+  ]
 })
 export class AppModule { }

@@ -10,7 +10,7 @@
     <div class="mb-4">
       <div class="flex flex-col">
         <label for>Last name</label>
-        <input class type="text"  formControlName="lastName">
+        <input class type="text" formControlName="lastName">
       </div>
     </div>
   </div>
@@ -68,23 +68,9 @@
         <input class type="number" formControlName="inches">
       </div>
     </div>
-  </div>
 
-  <div class="flex gap-8">
-    <div class="mb-4">
-      <div class="flex flex-col">
-        <label for>Feet</label>
-        <input class type="number" name id>
-      </div>
-    </div>
-    <div class="mb-4">
-      <div class="flex flex-col">
-        <label for>Inches</label>
-        <input class type="number" name id>
-      </div>
-    </div>
     <div class="flex items-center">
-      = XX inches
+      = {{ totalInches$ | async }} inches
     </div>
   </div>
 
@@ -96,12 +82,24 @@
       </div>
     </div>
     <div class="flex items-center">
-      = XX pounds
+      = {{ kg | kgToPound | number }} pounds
     </div>
   </div>
 
   <div class>
     <button
+      (click)="showScore()"
       class="py-3 px-8 rounded-sm bg-blue-700 text-white hover:bg-blue-600">Submit</button>
   </div>
 </form>
+
+<section *ngIf="isScoreDisplayed" class="mt-12">
+  <p>
+    Dear {{ bmiForm.get('gender')?.value == 'Male' ? 'Mr.' : 'Ms.' }}
+    {{ bmiForm.get('firstName')?.value + ' ' + bmiForm.get('lastName')?.value }},
+    Your BMI is {{ bmi }}. Your weight range is XX.
+  </p>
+  <p>
+    A copy of the result will be sent to your email XX.
+  </p>
+</section>
