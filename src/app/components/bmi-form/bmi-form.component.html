@@ -107,7 +107,7 @@
 
 <section *ngIf="isScoreDisplayed" class="mt-12">
   <p>
-    Dear {{ bmiForm.get('gender')?.value == 'Male' ? 'Mr.' : 'Ms.' }}
+    Dear {{ getSalutation() }}
     {{ bmiForm.get('firstName')?.value + ' ' + bmiForm.get('lastName')?.value }},
     Your BMI is {{ bmi | number }}. Your weight range is {{ weightRange }}.
   </p>

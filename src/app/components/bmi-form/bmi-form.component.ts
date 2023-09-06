@@ -1,7 +1,5 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { Observable, combineLatest, map, tap } from 'rxjs';
-import { KgToPoundPipe } from 'src/app/pipes/kg-to-pound.pipe';
 
 @Component({
   selector: 'app-bmi-form',
@@ -39,6 +37,12 @@ export class BmiFormComponent {
     this.bmi = this.getBmiScore(heightInInches, weightLbs);
     this.weightRange = this.getWeightRange(this.bmi)
     this.isScoreDisplayed = true;
+  }
+
+  getSalutation() {
+    if (this.bmiForm.get('gender')?.value === 'Male') return 'Mr.'
+    if (this.bmiForm.get('gender')?.value === 'Female') return 'Ms.'
+    return ''
   }
 
   private getTotalInches(feet: number, inches: number): number {
