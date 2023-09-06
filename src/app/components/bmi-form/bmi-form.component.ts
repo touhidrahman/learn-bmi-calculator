@@ -9,10 +9,7 @@ import { Observable, combineLatest, map, tap } from 'rxjs';
 })
 export class BmiFormComponent {
 
-  // TODO: fix
-  kg = 32
   bmi = 0
-
   isScoreDisplayed = false;
 
   bmiForm = new FormGroup({
@@ -29,9 +26,6 @@ export class BmiFormComponent {
     return this.bmiForm.get('email')?.errors
   }
 
-
-  totalInches$: Observable<number> = this.convertToInches()
-
   constructor() {
 
     // this.bmiForm.valueChanges.pipe().subscribe({
@@ -39,22 +33,8 @@ export class BmiFormComponent {
     // })
   }
 
-  convertToInches(): Observable<number> {
-    return combineLatest({
-      // TODO: fix
-      feet: this.bmiForm.get('feet')?.valueChanges as any,
-      inches: this.bmiForm.get('inches')?.valueChanges as any,
-    }).pipe(
-      tap((value) => console.log('TCL: value', value)), // TODO: remove
-      map(({ feet, inches }) => this.getTotalInches(feet as number, inches as number))
-    )
-  }
-
   showScore(): void {
     this.isScoreDisplayed = true;
   }
 
-  private getTotalInches(feet: number, inches: number): number {
-    return feet * 12 + inches
-  }
 }

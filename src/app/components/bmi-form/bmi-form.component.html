@@ -91,7 +91,7 @@
       </div>
     </div>
     <div class="flex items-center">
-      = {{ kg | kgToPound | number }} pounds
+      = {{ (bmiForm.get('weight')?.value ?? 0) | kgToPound | number }} pounds
     </div>
   </div>
 
