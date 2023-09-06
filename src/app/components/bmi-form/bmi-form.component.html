@@ -88,6 +88,9 @@
       <div class="flex flex-col">
         <label for>Weight</label>
         <input class type="number" formControlName="weight">
+        <span *ngIf="bmiForm.get('weight')?.errors" class="pt-2 text-sm text-red-400">
+          Value should be between 0 - 200.
+        </span>
       </div>
     </div>
     <div class="flex items-center">
@@ -106,9 +109,9 @@
   <p>
     Dear {{ bmiForm.get('gender')?.value == 'Male' ? 'Mr.' : 'Ms.' }}
     {{ bmiForm.get('firstName')?.value + ' ' + bmiForm.get('lastName')?.value }},
-    Your BMI is {{ bmi }}. Your weight range is XX.
+    Your BMI is {{ bmi | number }}. Your weight range is {{ weightRange }}.
   </p>
   <p>
-    A copy of the result will be sent to your email XX.
+    A copy of the result will be sent to your email {{ bmiForm.get('email')?.value }}.
   </p>
 </section>
